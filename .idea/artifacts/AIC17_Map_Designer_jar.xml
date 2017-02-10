@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AIC17-Map-Designer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AIC17_Map_Designer_jar</output-path>
+    <root id="archive" name="AIC17-Map-Designer.jar">
+      <element id="module-output" name="AIC17-Map-Designer" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../AIC16-ServerV3/gson-2.3.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
