@@ -33,8 +33,8 @@ public class MapEditorPanel extends JPanel{
     private int team = 0;
     private int color = 0;
     private  int direction = 0;
-    private int counter = 0;
     private Cell lastCell;
+    private int teleportCounter = 0;
 
 
     MapEditorPanel(MapEditorFrame frame, Map gameMap){
@@ -72,7 +72,7 @@ public class MapEditorPanel extends JPanel{
                 }
                 //it is they are!
                 if(lastCell.getContent() instanceof Fish){
-                    Fish fish = new Fish(counter++,lastCell, team, direction, color, queen);
+                    Fish fish = new Fish(0,lastCell, team, direction, color, queen);
                     fish.setSick(sick);
                     lastCell.setContent(fish);
                 }
@@ -86,7 +86,7 @@ public class MapEditorPanel extends JPanel{
         });
         this.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseReleased(MouseEvent e) {
                 super.mouseClicked(e);
                 thisMap.requestFocus();
                 int y = e.getX();//it is true but look weird I know
@@ -104,7 +104,7 @@ public class MapEditorPanel extends JPanel{
                 if(teleport_Phase2){
                     if(cell.getTeleport() == null) {
                         lastCell.getTeleport().setPair(cell);
-                        cell.setTeleport(new Teleport(counter++, cell, lastCell));
+                        cell.setTeleport(new Teleport(-teleportCounter++, cell, lastCell));
                         teleport_Phase2 = false;
                     }
                 }else
@@ -112,25 +112,25 @@ public class MapEditorPanel extends JPanel{
 
                     switch (selected) {
                         case "roach":
-                            Fish fish = new Fish(counter++, lastCell, team, direction, color, queen);
+                            Fish fish = new Fish(0, lastCell, team, direction, color, queen);
                             fish.setSick(sick);
                             cell.setContent(fish);
 
                             break;
                         case "trash":
-                            cell.setContent(new Trash(counter++, cell));
+                            cell.setContent(new Trash(0, cell));
                             break;
                         case "food":
-                            cell.setContent(new Food(counter++, cell));
+                            cell.setContent(new Food(0, cell));
                             break;
                         case "teleport":
                             if (cell.getTeleport() == null) {
-                                cell.setTeleport(new Teleport(counter++, cell, cell));
+                                cell.setTeleport(new Teleport(-teleportCounter++, cell, cell));
                                 teleport_Phase2 = true;
                             }
                             break;
                         case "slipper":
-                            cell.setNet(new Net(counter++, cell));
+                            cell.setNet(new Net(0, cell));
                             break;
                         case "eraser":
                             cell.setContent(null);

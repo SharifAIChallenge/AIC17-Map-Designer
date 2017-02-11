@@ -24,6 +24,7 @@ public class MapJsonExtra {
         Cell cells[][] = map.getCells();
         w = map.getW();
         h = map.getH();
+        int counter = 0;
         for(int i = 0; i<map.getH(); i++)
             for(int j = 0; j<map.getW(); j++){
                 Cell cell = cells[i][j];
@@ -32,7 +33,7 @@ public class MapJsonExtra {
                     if(content instanceof Fish){
                         Fish temp = (Fish)content;
                         ArrayList<Integer> fish = new ArrayList<>();
-                        fish.add(temp.getId());
+                        fish.add(counter++);
                         fish.add(temp.getPosition().getRow());
                         fish.add(temp.getPosition().getColumn());
                         fish.add(temp.getDirection());
@@ -44,14 +45,14 @@ public class MapJsonExtra {
                     }else if(content instanceof Food){
                         Food temp = (Food)content;
                         ArrayList<Integer> food = new ArrayList<>();
-                        food.add(temp.getId());
+                        food.add(counter++);
                         food.add(temp.getPosition().getRow());
                         food.add(temp.getPosition().getColumn());
                         foods.add(food);
                     }else if(content instanceof Trash){
                         Trash temp = (Trash)content;
                         ArrayList<Integer> trash = new ArrayList<>();
-                        trash.add(temp.getId());
+                        trash.add(counter++);
                         trash.add(temp.getPosition().getRow());
                         trash.add(temp.getPosition().getColumn());
                         trashes.add(trash);
@@ -61,7 +62,7 @@ public class MapJsonExtra {
                 if(cell.getNet()!=null){
                     Net temp = cell.getNet();
                     ArrayList<Integer> net = new ArrayList<>();
-                    net.add(temp.getId());
+                    net.add(counter++);
                     net.add(temp.getPosition().getRow());
                     net.add(temp.getPosition().getColumn());
                     nets.add(net);
@@ -69,13 +70,22 @@ public class MapJsonExtra {
                 if(cell.getTeleport()!=null){
                     Teleport temp = cell.getTeleport();
                     ArrayList<Integer> teleport = new ArrayList<>();
+                    if(temp.getId() < 0) {
+                        temp.setId(counter++);
+                    }
                     teleport.add(temp.getId());
+
                     teleport.add(temp.getPosition().getRow());
                     teleport.add(temp.getPosition().getColumn());
+                    if(temp.getPair().getTeleport().getId() < 0){
+                        temp.getPair().getTeleport().setId(counter++);
+                    }
                     teleport.add(temp.getPair().getTeleport().getId());
                     teleports.add(teleport);
                 }
+
             }
+
         //TODO:ui for constants
         constants.add(500.0);//turnTimeOut
         constants.add(0.005);//foodProb
@@ -98,5 +108,18 @@ public class MapJsonExtra {
         constants.add(1.0);// disobeyNum//TODO:for debug turn it off
         constants.add(6.0);// foodValidTime
         constants.add(10.0);// trashValidTime]
+
+        //deleting the id of everyone
+        for(int i = 0; i<map.getH(); i++)
+            for(int j = 0; j<map.getW(); j++) {
+                Cell temp_cell = map.getCells()[i][j];
+                if(temp_cell.getContent()!= null)
+                    temp_cell.getContent().setId(-counter++);
+                if(temp_cell.getTeleport()!= null)
+                    temp_cell.getTeleport().setId(-counter++);
+                if(temp_cell.getNet()!=null)
+                    temp_cell.getNet().setId(-counter++);
+            }
     }
 }
+
