@@ -87,6 +87,7 @@ public class MapEditorPanel extends JPanel{
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
+                System.out.println("hello");
                 super.mouseClicked(e);
                 thisMap.requestFocus();
                 int y = e.getX();//it is true but look weird I know
@@ -95,7 +96,8 @@ public class MapEditorPanel extends JPanel{
                 y = y/cellSize;
                 Cell cell = gameMap.getCells()[x][y];
                 String selected = frame.getSelected();
-                if(!selected.equals("teleport")) {
+                System.out.println("selected is" + selected);
+                if(!selected.equals("Teleport")) {
                     if(teleport_Phase2) {
                         teleport_Phase2 = false;
                         lastCell.setTeleport(null);
@@ -109,30 +111,29 @@ public class MapEditorPanel extends JPanel{
                     }
                 }else
                 {
-
                     switch (selected) {
-                        case "roach":
+                        case "Beetle":
                             Fish fish = new Fish(0, cell, team, direction, color, queen);
                             fish.setSick(sick);
                             cell.setContent(fish);
 
                             break;
-                        case "trash":
+                        case "Trash":
                             cell.setContent(new Trash(0, cell));
                             break;
-                        case "food":
+                        case "Food":
                             cell.setContent(new Food(0, cell));
                             break;
-                        case "teleport":
+                        case "Teleport":
                             if (cell.getTeleport() == null) {
                                 cell.setTeleport(new Teleport(-teleportCounter++, cell, cell));
                                 teleport_Phase2 = true;
                             }
                             break;
-                        case "slipper":
+                        case "Slipper":
                             cell.setNet(new Net(0, cell));
                             break;
-                        case "eraser":
+                        case "Eraser":
                             cell.setContent(null);
                             if (cell.getTeleport() != null) {
                                 Cell cell1 = cell.getTeleport().getPair();

@@ -38,12 +38,12 @@ public class MapEditorFrame extends JFrame {
 
         //making the radio buttons for the editor
         JPanel optionPanel = new JPanel(new GridBagLayout());
-        final JRadioButton roach = new JRadioButton("roach", true);
-        final JRadioButton trash = new JRadioButton("trash", false);
-        final JRadioButton food = new JRadioButton("food", false);
-        final JRadioButton slipper = new JRadioButton("slipper", false);
-        final JRadioButton teleport = new JRadioButton("teleport", false);
-        final JRadioButton eraser = new JRadioButton("eraser", false);
+        final JRadioButton roach = new JRadioButton("Beetle", true);
+        final JRadioButton trash = new JRadioButton("Trash", false);
+        final JRadioButton food = new JRadioButton("Food", false);
+        final JRadioButton slipper = new JRadioButton("Slipper", false);
+        final JRadioButton teleport = new JRadioButton("Teleport", false);
+        final JRadioButton eraser = new JRadioButton("Eraser", false);
 
         EditorUtilSet.addComponentX(0, 1, roach, optionPanel);
         EditorUtilSet.addComponentX(1, 1, trash, optionPanel);
