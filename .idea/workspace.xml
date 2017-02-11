@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="58aa98ca-7921-4ea1-b94f-0bef7385977f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/debugUI/paintIt/MapEditorPanel.java" afterPath="$PROJECT_DIR$/src/debugUI/paintIt/MapEditorPanel.java" />
     </list>
     <ignored path="AIC17-Map-Designer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -693,7 +692,7 @@
       <updated>1486712522323</updated>
       <workItem from="1486712523828" duration="2804000" />
       <workItem from="1486763971792" duration="896000" />
-      <workItem from="1486813441622" duration="7936000" />
+      <workItem from="1486813441622" duration="8447000" />
     </task>
     <task id="LOCAL-00001" summary="map designer">
       <created>1486714295442</created>
@@ -709,11 +708,18 @@
       <option name="project" value="LOCAL" />
       <updated>1486824128961</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="cell problem handled">
+      <created>1486830000189</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1486830000189</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11636000" />
+    <option name="totallyTimeSpent" value="12147000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
@@ -727,7 +733,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41435564" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32605305" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32605305" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -762,7 +768,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="map designer" />
     <MESSAGE value="id's are now consistent" />
-    <option name="LAST_COMMIT_MESSAGE" value="id's are now consistent" />
+    <MESSAGE value="cell problem handled" />
+    <option name="LAST_COMMIT_MESSAGE" value="cell problem handled" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
