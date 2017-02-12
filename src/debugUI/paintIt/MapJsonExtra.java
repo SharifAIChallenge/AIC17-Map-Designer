@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Created by miladink on 2/8/17.
  */
 public class MapJsonExtra {
-    private int  w;
+    private int w;
     private int h;
     ArrayList<ArrayList<Integer>> fishes = new ArrayList<>();
     ArrayList<ArrayList<Integer>> foods = new ArrayList<>();
@@ -108,17 +108,17 @@ public class MapJsonExtra {
         constants.add(1.0);// disobeyNum//TODO:for debug turn it off
         constants.add(6.0);// foodValidTime
         constants.add(10.0);// trashValidTime]
-
+        counter = -1;
         //deleting the id of everyone
         for(int i = 0; i<map.getH(); i++)
             for(int j = 0; j<map.getW(); j++) {
                 Cell temp_cell = map.getCells()[i][j];
                 if(temp_cell.getContent()!= null)
-                    temp_cell.getContent().setId(-counter++);
+                    temp_cell.getContent().setId(counter--);
                 if(temp_cell.getTeleport()!= null)
-                    temp_cell.getTeleport().setId(-counter++);
+                    temp_cell.getTeleport().setId(counter--);
                 if(temp_cell.getNet()!=null)
-                    temp_cell.getNet().setId(-counter++);
+                    temp_cell.getNet().setId(counter--);
             }
     }
 }
