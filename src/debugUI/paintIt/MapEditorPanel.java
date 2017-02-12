@@ -89,6 +89,7 @@ public class MapEditorPanel extends JPanel{
             public void mouseReleased(MouseEvent e) {
                 System.out.println("hello");
                 super.mouseClicked(e);
+                thisMap.setFocusable(true);
                 thisMap.requestFocus();
                 int y = e.getX();//it is true but look weird I know
                 int x = e.getY();//it is true but look weird I know

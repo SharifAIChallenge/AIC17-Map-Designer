@@ -74,6 +74,7 @@ public class MapEditorFrame extends JFrame {
         JButton button4 = new JButton("save map");
         button4.addActionListener(e -> {
             mapPanel.saveMap();
+            mapPanel.setFocusable(true);
             mapPanel.requestFocus();
         });
         JButton button5 = new JButton("change theme");
