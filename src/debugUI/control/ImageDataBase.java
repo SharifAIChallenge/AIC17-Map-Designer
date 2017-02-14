@@ -32,8 +32,15 @@ public class ImageDataBase {
                 return addImageScaled(imageFilePath,width,height);
             else {
                 if(image.getWidth(null)!=width || image.getHeight(null)!=height) {
-                    image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-                    imageDataBase.images.put(imageFilePath,image);
+                    if(image.getWidth(null)>width && image.getHeight(null)>height) {
+                        image = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                        imageDataBase.images.put(imageFilePath,image);
+                    }
+                    else{
+                        imageDataBase.images.remove(image);
+                        image = addImageScaled(imageFilePath, width, height);
+                    }
+
                 }
                 return image;
             }

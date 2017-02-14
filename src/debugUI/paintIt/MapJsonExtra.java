@@ -108,7 +108,82 @@ public class MapJsonExtra {
         constants.add(1.0);// disobeyNum//TODO:for debug turn it off
         constants.add(6.0);// foodValidTime
         constants.add(10.0);// trashValidTime]
-        counter = -1;
+        killIds(map);
+
+    }
+    public MapJsonExtra(Map map, ArrayList<Double> constants) {
+        Cell cells[][] = map.getCells();
+        w = map.getW();
+        h = map.getH();
+        int counter = 0;
+        for(int i = 0; i<map.getH(); i++)
+            for(int j = 0; j<map.getW(); j++){
+                Cell cell = cells[i][j];
+                GameObject content = cell.getContent();
+                if(content!= null){
+                    if(content instanceof Fish){
+                        Fish temp = (Fish)content;
+                        ArrayList<Integer> fish = new ArrayList<>();
+                        fish.add(counter++);
+                        fish.add(temp.getPosition().getRow());
+                        fish.add(temp.getPosition().getColumn());
+                        fish.add(temp.getDirection());
+                        fish.add(temp.getColorNumber());
+                        fish.add(temp.isQueen()?1:0);
+                        fish.add(temp.isSick()?1:0);
+                        fish.add(temp.getTeamNumber());
+                        fishes.add(fish);
+                    }else if(content instanceof Food){
+                        Food temp = (Food)content;
+                        ArrayList<Integer> food = new ArrayList<>();
+                        food.add(counter++);
+                        food.add(temp.getPosition().getRow());
+                        food.add(temp.getPosition().getColumn());
+                        foods.add(food);
+                    }else if(content instanceof Trash){
+                        Trash temp = (Trash)content;
+                        ArrayList<Integer> trash = new ArrayList<>();
+                        trash.add(counter++);
+                        trash.add(temp.getPosition().getRow());
+                        trash.add(temp.getPosition().getColumn());
+                        trashes.add(trash);
+                    }
+
+                }
+                if(cell.getNet()!=null){
+                    Net temp = cell.getNet();
+                    ArrayList<Integer> net = new ArrayList<>();
+                    net.add(counter++);
+                    net.add(temp.getPosition().getRow());
+                    net.add(temp.getPosition().getColumn());
+                    nets.add(net);
+                }
+                if(cell.getTeleport()!=null){
+                    Teleport temp = cell.getTeleport();
+                    ArrayList<Integer> teleport = new ArrayList<>();
+                    if(temp.getId() < 0) {
+                        temp.setId(counter++);
+                    }
+                    teleport.add(temp.getId());
+
+                    teleport.add(temp.getPosition().getRow());
+                    teleport.add(temp.getPosition().getColumn());
+                    if(temp.getPair().getTeleport().getId() < 0){
+                        temp.getPair().getTeleport().setId(counter++);
+                    }
+                    teleport.add(temp.getPair().getTeleport().getId());
+                    teleports.add(teleport);
+                }
+
+            }
+
+        //TODO:ui for constants
+        this.constants.addAll(constants);
+        killIds(map);
+    }
+
+    public static void killIds(Map map){
+        int counter = -1;
         //deleting the id of everyone
         for(int i = 0; i<map.getH(); i++)
             for(int j = 0; j<map.getW(); j++) {

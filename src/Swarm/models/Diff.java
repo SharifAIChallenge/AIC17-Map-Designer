@@ -68,12 +68,22 @@ public class Diff {
         mov.add(movItem);
     }
 
-    public void alter(int id, int color, int sick){
+    public void alterFish(int id,int x,int y, int color, int sick){
         ArrayList<Integer> alterItem = new ArrayList<>();
         alterItem.add(id);
+        alterItem.add(x);
+        alterItem.add(y);
         alterItem.add(color);
         alterItem.add(sick);
         alter.add(alterItem);
+    }
+
+    public void alterItem(int id, int x, int y) {
+        ArrayList<Integer> alterItems = new ArrayList<>();
+        alterItems.add(id);
+        alterItems.add(x);
+        alterItems.add(y);
+        alter.add(alterItems);
     }
 
     public Change[] getChanges() {

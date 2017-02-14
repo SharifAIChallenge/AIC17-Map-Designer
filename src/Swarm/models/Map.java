@@ -1,7 +1,7 @@
 package Swarm.models;
 
 import Swarm.objects.*;
-import debugUI.control.Json;
+import network.Json;
 
 import java.io.File;
 import java.io.FileReader;
@@ -25,6 +25,7 @@ public class Map implements Serializable{
     private int[][] initialTeleports;
     private int[][] initialFoods;
     private int[][] initialFishes;
+    private double[] initialConstants;
     private int[] score;
 
 
@@ -47,9 +48,9 @@ public class Map implements Serializable{
             this.w = mapJson.w;
             this.h = mapJson.h;
 
-            cells= new Cell[w][h];
-            for (int i = 0; i < w; i++) {
-                for (int j = 0; j < h; j++) {
+            cells = new Cell[h][w];
+            for (int i = 0; i < h; i++) {
+                for (int j = 0; j < w; j++) {
                     cells[i][j] = new Cell();
                     cells[i][j].setRow(i);
                     cells[i][j].setColumn(j);
@@ -71,32 +72,40 @@ public class Map implements Serializable{
 
     }
 
-    private GameConstants makeConstants(int[] constants) {
-
+    private GameConstants makeConstants(double[] constants) {
+        initialConstants = constants;
         GameConstants gameConstants = new GameConstants();
-        gameConstants.setTurnTimeout(constants[0]);
+        gameConstants.setTurnTimeout((int)constants[0]);
         gameConstants.setFoodProb(constants[1]);
         gameConstants.setTrashProb(constants[2]);
         gameConstants.setNetProb(constants[3]);
-        gameConstants.setNetValidTime(constants[4]);
-        gameConstants.setColorCost(constants[5]);
-        gameConstants.setSickCost(constants[6]);
-        gameConstants.setUpdateCost(constants[7]);
-        gameConstants.setDetMoveCost(constants[8]);
-        gameConstants.setKillQueenScore(constants[9]);
-        gameConstants.setKillBothQueenScore(constants[10]);
-        gameConstants.setKillFishScore(constants[11]);
-        gameConstants.setQueenCollisionScore(constants[12]);
-        gameConstants.setFishFoodScore(constants[13]);
-        gameConstants.setQueenFoodScore(constants[14]);
-        gameConstants.setSickLifeTime(constants[15]);
-        gameConstants.setPowerRatio(constants[16]);
+        gameConstants.setNetValidTime((int)constants[4]);
+        gameConstants.setColorCost((int)constants[5]);
+        gameConstants.setSickCost((int)constants[6]);
+        gameConstants.setUpdateCost((int)constants[7]);
+        gameConstants.setDetMoveCost((int)constants[8]);
+        gameConstants.setKillQueenScore((int)constants[9]);
+        gameConstants.setKillBothQueenScore((int)constants[10]);
+        gameConstants.setKillFishScore((int)constants[11]);
+        gameConstants.setQueenCollisionScore((int)constants[12]);
+        gameConstants.setFishFoodScore((int)constants[13]);
+        gameConstants.setQueenFoodScore((int)constants[14]);
+        gameConstants.setSickLifeTime((int)constants[15]);
+        gameConstants.setPowerRatio((int)constants[16]);
         gameConstants.setEndRatio(constants[17]);
-        gameConstants.setDisobeyNum(constants[18]);
-        gameConstants.setFoodValidTime(constants[19]);
-        gameConstants.setTrashValidTime(constants[20]);
+        gameConstants.setDisobeyNum((int)constants[18]);
+        gameConstants.setFoodValidTime((int)constants[19]);
+        gameConstants.setTrashValidTime((int)constants[20]);
         return gameConstants;
 
+    }
+
+    public double[] getInitialConstants() {
+        return initialConstants;
+    }
+
+    public void setInitialConstants(double[] initialConstants) {
+        this.initialConstants = initialConstants;
     }
 
 
@@ -108,7 +117,7 @@ public class Map implements Serializable{
         private int[][] trashes;
         private int[][] teleports;
         private int[][] nets;
-        private int[] constants;
+        private double[] constants;
     }
 
 
@@ -125,14 +134,20 @@ public class Map implements Serializable{
         [id, x, y, direction, color, queen, sick, team]
          */
         for (int i = 0; i < fishes.length; i++) {
-            boolean b = false;
+            boolean bQueen = false;
+            boolean bSick = false;
             if(fishes[i][5] == 1){
-                b = true;
+                bQueen = true;
             }
 
+            if(fishes[i][6] == 1){
+                bSick = true;
+            }
 
-            Fish fish = new Fish(fishes[i][0],cells[fishes[i][1]][fishes[i][2]], fishes[i][7],fishes[i][3],fishes[i][4],b);
-
+            Fish fish = new Fish(fishes[i][0],cells[fishes[i][1]][fishes[i][2]], fishes[i][7],fishes[i][3],fishes[i][4],bSick,bQueen);
+            if(bSick) {
+                fish.setDeadTime(this.constants.getSickLifeTime());
+            }
             this.fishes[fish.getTeamNumber()].add(fish);
 
             cells[fishes[i][1]][fishes[i][2]].setContent(fish);
@@ -172,6 +187,7 @@ public class Map implements Serializable{
 
         for (int i = 0; i < nets.length; i++) {
             Net net = new Net(nets[i][0],cells[nets[i][1]][nets[i][2]]);
+            net.setDeadTime(constants.getNetValidTime());
 
             this.tempObjects.add(net);
 
@@ -187,7 +203,7 @@ public class Map implements Serializable{
 
         for (int i = 0; i < trashes.length; i++) {
             Trash trash = new Trash(trashes[i][0],cells[trashes[i][1]][trashes[i][2]]);
-
+            trash.setDeadTime(this.constants.getTrashValidTime());
             this.tempObjects.add(trash);
             cells[trashes[i][1]][trashes[i][2]].setContent(trash);
 
@@ -201,6 +217,7 @@ public class Map implements Serializable{
         for (int i = 0; i < foods.length; i++) {
 
             Food food = new Food(foods[i][0],cells[foods[i][1]][foods[i][2]]);
+            food.setDeadTime(this.constants.getFoodValidTime());
             this.tempObjects.add(food);
             cells[foods[i][1]][foods[i][2]].setContent(food);
 
@@ -220,25 +237,16 @@ public class Map implements Serializable{
         return tempObjects;
     }
 
-    public void setTempObjects(ArrayList<GameObject> tempObjects) {
-        this.tempObjects = tempObjects;
-    }
 
     public GameConstants getConstants() {
         return constants;
     }
 
-    public void setConstants(GameConstants constants) {
-        this.constants = constants;
-    }
 
     public ArrayList<Teleport> getTeleports() {
         return teleports;
     }
 
-    public void setTeleports(ArrayList<Teleport> teleports) {
-        this.teleports = teleports;
-    }
 
 
     public int[][] getInitialFishes() {
@@ -266,9 +274,8 @@ public class Map implements Serializable{
         return mapName;
     }
 
-    public void setMapName(String mapName) {
-        this.mapName = mapName;
-    }
+
+
 
 
     public int getH() {
@@ -302,9 +309,7 @@ public class Map implements Serializable{
         return idCounter;
     }
 
-    public void setIdCounter(int idCounter) {
-        this.idCounter = idCounter;
-    }
+
 
     public Cell[][] getCells() {
         return cells;

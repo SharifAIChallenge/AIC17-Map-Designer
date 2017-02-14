@@ -34,7 +34,7 @@ public class MapEditorPanel extends JPanel{
     private int color = 0;
     private  int direction = 0;
     private Cell lastCell;
-    private int teleportCounter = 0;
+    private int teleportCounter = -1;
 
 
     MapEditorPanel(MapEditorFrame frame, Map gameMap){
@@ -95,7 +95,8 @@ public class MapEditorPanel extends JPanel{
                 int x = e.getY();//it is true but look weird I know
                 x = x/cellSize;
                 y = y/cellSize;
-                Cell cell = gameMap.getCells()[x][y];
+                Cell cell = thisMap.getGameMap().getCells()[x][y];
+                System.out.println("x is" + x + "y is" + y);
                 String selected = frame.getSelected();
                 System.out.println("selected is" + selected);
                 if(!selected.equals("Teleport")) {
@@ -107,7 +108,7 @@ public class MapEditorPanel extends JPanel{
                 if(teleport_Phase2){
                     if(cell.getTeleport() == null) {
                         lastCell.getTeleport().setPair(cell);
-                        cell.setTeleport(new Teleport(-teleportCounter++, cell, lastCell));
+                        cell.setTeleport(new Teleport(teleportCounter--, cell, lastCell));
                         teleport_Phase2 = false;
                     }
                 }else
@@ -127,7 +128,7 @@ public class MapEditorPanel extends JPanel{
                             break;
                         case "Teleport":
                             if (cell.getTeleport() == null) {
-                                cell.setTeleport(new Teleport(-teleportCounter++, cell, cell));
+                                cell.setTeleport(new Teleport(teleportCounter--, cell, cell));
                                 teleport_Phase2 = true;
                             }
                             break;
@@ -160,7 +161,9 @@ public class MapEditorPanel extends JPanel{
     }
     public void setMap(Map gameMap){
         this.gameMap = gameMap;
-
+        setCellSize();
+        CellPainter.changeTheme();
+        this.repaint();
     }
     private BufferedImage draw(Map gameMap){
         //---we will draw on this image and then draw this image on the JPanel
@@ -198,7 +201,7 @@ public class MapEditorPanel extends JPanel{
         return shot;
     }
 
-    void saveMap(){
+    void saveMap(ArrayList<Double> constants){
         FileDialog fileDialog = new FileDialog((Frame) null, "Save Recorded Images", FileDialog.SAVE);
         fileDialog.setFilenameFilter((dir, name) -> name.matches(".*\\.zip"));
         fileDialog.setMultipleMode(false);
@@ -208,7 +211,7 @@ public class MapEditorPanel extends JPanel{
         if (files.length != 1)
             return;
         File f = files[0];
-        MapJsonExtra jsonExtra = new MapJsonExtra(gameMap);
+        MapJsonExtra jsonExtra = new MapJsonExtra(gameMap, constants);
         String json = Json.GSON.toJson(jsonExtra);
         try {
             PrintWriter printWriter = new PrintWriter(f);
@@ -256,4 +259,7 @@ public class MapEditorPanel extends JPanel{
         MapEditorFrame frame = new MapEditorFrame();
     }
 
+    public Map getGameMap() {
+        return gameMap;
+    }
 }
