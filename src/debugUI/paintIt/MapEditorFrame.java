@@ -164,8 +164,33 @@ public class MapEditorFrame extends JFrame {
             File[] files = fileDialog.getFiles();
             if (files.length != 1)
                 return;
+            editor.setSelected(true);
+            constants.setSelected(false);
+            editor.getActionListeners()[0].actionPerformed(new ActionEvent(this,0,"hello man"));
             File f = files[0];
             Map temp = new Map(f);
+            initals.set (0,  ((double) map.getConstants().getTurnTimeout()));
+            initals.set (1,  ((double) map.getConstants().getFoodProb()));
+            initals.set (2,  ((double) map.getConstants().getTrashProb()));
+            initals.set (3,  ((double) map.getConstants().getNetProb()));
+            initals.set (4,  ((double) map.getConstants().getNetValidTime()));
+            initals.set (5,  ((double) map.getConstants().getColorCost()));
+            initals.set (6,  ((double) map.getConstants().getSickCost()));
+            initals.set (7,  ((double) map.getConstants().getUpdateCost()));
+            initals.set (8,  ((double) map.getConstants().getDetMoveCost()));
+            initals.set (9,  ((double) map.getConstants().getKillQueenScore()));
+            initals.set (10,  ((double) map.getConstants().getKillBothQueenScore()));
+            initals.set (11,  ((double) map.getConstants().getKillFishScore()));
+            initals.set (12,  ((double) map.getConstants().getQueenCollisionScore()));
+            initals.set (13,  ((double) map.getConstants().getFishFoodScore()));
+            initals.set (14,  ((double) map.getConstants().getQueenFoodScore()));
+            initals.set (15,  ((double) map.getConstants().getSickLifeTime()));
+            initals.set (16,  ((double) map.getConstants().getPowerRatio()));
+            initals.set (17,  ((double) map.getConstants().getEndRatio()));
+            initals.set (18,  ((double) map.getConstants().getDisobeyNum()));
+            initals.set (19,  ((double) map.getConstants().getFoodValidTime()));
+            initals.set (20,  ((double) map.getConstants().getTrashValidTime()));
+
             MapJsonExtra.killIds(temp);
             mapPanel.setMap(temp);
             mapPanel.repaint();

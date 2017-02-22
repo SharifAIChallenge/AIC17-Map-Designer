@@ -115,6 +115,14 @@ public class MapEditorPanel extends JPanel{
                 {
                     switch (selected) {
                         case "Beetle":
+                            if(cell.getContent() instanceof  Fish){
+                                Fish fish = (Fish)cell.getContent();
+                                team = fish.getTeamNumber();
+                                direction = fish.getDirection();
+                                color = fish.getColorNumber();
+                                queen = fish.isQueen();
+                                sick = fish.isSick();
+                            }
                             Fish fish = new Fish(0, cell, team, direction, color, queen);
                             fish.setSick(sick);
                             cell.setContent(fish);
